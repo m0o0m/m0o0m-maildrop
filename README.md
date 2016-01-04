@@ -104,3 +104,62 @@ Last, Play has been updated to the 2.3 branch, along with automatic
 asset versioning and a much cleaner way to cache assets. Website
 performance should be increased vs. the previous version of MailDrop.
 
+信箱
+见信箱中的作用。
+
+信箱是一个开源的，可扩展的，高性能的Mailinator，“临时收件箱”，你可以给出来的时候你不希望给您的真实电子邮件地址的版本。信箱收件箱被设计成快速，一次性的。
+
+设计目标是要Mailinator的速度的90％左右，同时添加额外的功能性和快速，方便地横向扩展的能力。
+
+凡Mailinator在一个JVM上运行，信箱拆分SMTP和Web应用程序转换为独立的JVM，同时使用Redis的作为其主要的数据存储。这允许更流体应用架构，同时仍保留预期高速邮件和Web应用程序的速度。
+
+信箱是用Scala编写，大量使用阿卡演员和戏剧框架。功能包括：
+
+从反垃圾邮件模块贡献Heluna的发送者和数据
+90％的垃圾邮件试图拒绝
+网络黑名单
+IP连接，邮件主题限制
+基于信誉的拦截
+SPF检查
+灰名单
+备用邮箱别名
+条消息附件
+邮件大小限制
+在一个文件中的SMTP配置完成
+易于修改的网站，写在LESS和CoffeeScript的
+要求
+
+SBT 0.13+
+PlayFramework 2.3.4+
+Redis的2.6+
+对于硬件，一个Amazon EC2实例小应该是不错的开始。信箱应采取的RAM 512M的SMTP模块，512M的RAM用于Web模块，以及512M RAM的Redis的数据存储。在实践中，CPU不是一个问题; 信箱花费大量的时间等待磁盘或网络IO。
+
+安装
+
+克隆库到本地目录
+
+这会给你三个子目录，“共同”，是实用工具类和模型的共享设置，“SMTP”是邮件传输代理，和“网络”的网站。
+
+创建SMTP服务器
+
+进入“SMTP”并运行“SBT编译”。这将创建信箱SMTP服务器的罐子。如果你喜欢，你可以创建包括运行“SBT集结号”所有依赖一个JAR。
+
+要运行SMTP服务器，使用“Java的罐子（jar文件）信箱”。如果你想使用自定义的配置，使用的“java -Dconfig.file = /路径/要/你/ application.conf罐子（jar文件）信箱”。
+
+创建web服务器
+
+进入“网络”并运行“戏DIST”。这将创建信箱网站的zip文件。（有关如何运行一个播放web应用程序的更多信息，位于上 播放框架的网站）
+
+要运行Web服务器，只需使用“开始”命令压缩文件内，或再指定一个自定义的配置使用启动-Dconfig.file = /路径/要/你/ application.conf
+
+更新日志
+
+2.0版是信箱的内部的重写。该网站本身具有相同的外观和感觉，但消息被处理的方式略有不同。
+
+主的变化是一个开关来 rediscala连接到Redis的实例。rediscala是一个反应性驱动，并执行比老Redis的客户要好得多。
+
+其次，许多演员和监事都被扔在赞成简单的斯卡拉期货。这简化了代码库，同时仍然允许高performance--信箱只是将不能被作为微调（自定义调度，保证的消息传送等）。
+
+消息现在存储在Redis的JSON格式，而不是作为序列化的字节串。JSON解析网站上的开销是最小，并允许里面的Redis的数据的更好的整体图。
+
+最后，游戏已经更新到了2.3支，以及自动资产版本控制和更清洁的方式来缓存资产。网站性能应增加与以前版本的信箱中。
